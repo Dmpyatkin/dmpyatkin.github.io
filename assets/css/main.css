@@ -606,6 +606,17 @@ input, select, textarea {
 		position: relative;
 	}
 
+	.icon img {
+		display: block; /* Removes extra spacing below the image */
+		max-width: 100%; /* Ensures the image doesn't exceed container size */
+		max-height: 100%; /* Ensures the image maintains aspect ratio */
+		width: auto; /* Maintains aspect ratio horizontally */
+		height: auto; /* Maintains aspect ratio vertically */
+		border-radius: inherit; /* Matches the container's rounded corners */
+		border: 0; /* Removes default border */
+		object-fit: contain; /* Ensures the image fits within the container */
+	}
+
 		.icon:before {
 			-moz-osx-font-smoothing: grayscale;
 			-webkit-font-smoothing: antialiased;
