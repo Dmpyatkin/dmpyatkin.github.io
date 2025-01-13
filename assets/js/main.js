@@ -292,11 +292,18 @@
 				var $this = $(this);
 
 				// Close.
-					$('<div class="close">Close</div>')
-						.appendTo($this)
-						.on('click', function() {
-							location.hash = '';
-						});
+				$('<div class="close">Close</div>')
+					.appendTo($this)
+					.on('click', function() {
+					// If this article has data-parent, go to that parent’s hash.
+					// Otherwise, go to the main page.
+					let parent = $this.data('parent');
+					if (parent) {
+						location.hash = '#' + parent;
+					} else {
+						location.hash = '';
+					}
+				});
 
 				// Prevent clicks from inside article from bubbling.
 					$this.on('click', function(event) {
@@ -306,13 +313,22 @@
 			});
 
 		// Events.
-			$body.on('click', function(event) {
+				$body.on('click', function(event) {
 
-				// Article visible? Hide.
-					if ($body.hasClass('is-article-visible'))
-						$main._hide(true);
+					if ($body.hasClass('is-article-visible')) {
+					// If active article is a "child" article, go back to its parent,
+					// else hide completely.
+					const $article = $main_articles.filter('.active');
+					let parent = $article.data('parent');
 
-			});
+					if (parent) {
+						location.hash = '#' + parent;
+					} else {
+						$main._hide(true);  // Original behavior
+					}
+					}
+
+				});
 
 			$window.on('keyup', function(event) {
 
