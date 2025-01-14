@@ -337,8 +337,18 @@
 					case 27:
 
 						// Article visible? Hide.
-							if ($body.hasClass('is-article-visible'))
-								$main._hide(true);
+						if ($body.hasClass('is-article-visible')) {
+                // If active article is a "child" article, go back to its parent,
+                // else hide completely.
+							const $article = $main_articles.filter('.active');
+							let parent = $article.data('parent');
+                
+							if (parent) {
+								location.hash = '#' + parent;
+							} else {
+								$main._hide(true);  // Original behavior
+							}
+						}
 
 						break;
 
